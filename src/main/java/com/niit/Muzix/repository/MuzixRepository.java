@@ -10,4 +10,5 @@ public interface MuzixRepository extends MongoRepository<Track,Integer> {
 
     @Query("{'artist.artistName':{$in:[?0]}}")
     public List<Track> findByArtist(String artistName);
+    public List<Track> findByRating(Integer trackRating);
 }
