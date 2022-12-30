@@ -6,6 +6,9 @@
 package com.niit.Muzix.service;
 
 import com.niit.Muzix.domain.Track;
+import com.niit.Muzix.exception.ArtistNotFoundException;
+import com.niit.Muzix.exception.MusicAlreadyExistException;
+import com.niit.Muzix.exception.MusicNotFoundException;
 import com.niit.Muzix.repository.MuzixRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +21,12 @@ public class MuzixServiceImpl implements MuzixService {
     MuzixRepository muzixRepository;
 
     @Override
-    public Track addTrack(Track track) {
+    public Track addTrack(Track track) throws MusicAlreadyExistException {
         if (muzixRepository.findById(track.getTrackId()).isEmpty()) {
             Track track1 = muzixRepository.save(track);
             return track1;
         }
-        return null;
+        throw new MusicAlreadyExistException();
     }
 
     @Override
@@ -32,16 +35,16 @@ public class MuzixServiceImpl implements MuzixService {
     }
 
     @Override
-    public String delete(Integer trackId) {
+    public String delete(Integer trackId) throws MusicNotFoundException {
         if (muzixRepository.findById(trackId).isEmpty()) {
-            return "The Id is not existed";
+            throw new MusicNotFoundException();
         }
         muzixRepository.deleteById(trackId);
-        return "Deleted Successfully";
+        return "Track deleted Successfully";
     }
 
     @Override
-    public List<Track> findByArtist(String artistName) {
+    public List<Track> findByArtist(String artistName) throws ArtistNotFoundException {
         return muzixRepository.findByArtist(artistName);
     }
 
