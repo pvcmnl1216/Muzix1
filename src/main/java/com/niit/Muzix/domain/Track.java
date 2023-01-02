@@ -8,6 +8,8 @@ package com.niit.Muzix.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 @Document
 public class Track {
     @Id
@@ -66,5 +68,18 @@ public class Track {
                 ", trackRating=" + trackRating +
                 ", artist=" + artist +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Track track = (Track) o;
+        return trackId == track.trackId && trackRating == track.trackRating && Objects.equals(trackName, track.trackName) && Objects.equals(artist, track.artist);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(trackId, trackName, trackRating, artist);
     }
 }

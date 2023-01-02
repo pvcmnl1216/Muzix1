@@ -5,6 +5,8 @@
  */
 package com.niit.Muzix.domain;
 
+import java.util.Objects;
+
 public class Artist {
     private int artistId;
     private String artistName;
@@ -39,5 +41,18 @@ public class Artist {
                 "artistId=" + artistId +
                 ", artistName='" + artistName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Artist artist = (Artist) o;
+        return artistId == artist.artistId && Objects.equals(artistName, artist.artistName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(artistId, artistName);
     }
 }
