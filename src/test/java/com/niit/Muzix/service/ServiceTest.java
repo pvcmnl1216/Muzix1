@@ -17,7 +17,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import  org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class ServiceTest {
@@ -32,12 +37,16 @@ public class ServiceTest {
     MuzixRepository muzixRepository;
     @InjectMocks
     MuzixServiceImpl muzixService;
-    private Track track;
-    private Artist artist;
+    private Track track,track1;
+    private Artist artist,artist1;
+    List<Track>trackList;
     @BeforeEach
     public void setUp(){
         this.artist = new Artist(1,"Dui");
         this.track = new Track(1,"Due",6,this.artist);
+        this.artist1 = new Artist(1,"Dui");
+        this.track1 = new Track(1,"Due",6,this.artist);
+        trackList = Arrays.asList(track,track1);
     }
     @AfterEach
     public void tearDown(){
